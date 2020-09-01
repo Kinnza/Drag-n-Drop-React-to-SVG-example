@@ -1,0 +1,45 @@
+.App {
+  font-family: sans-serif;
+}
+
+.dragging-blocks {
+  color: black;
+  display: flex;
+}
+
+.draggable {
+  margin: 5px;
+}
+
+.block {
+  padding: 10px;
+  border: 1px solid black;
+  color: black;
+  width: 50px;
+  height: 50px;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.node rect {
+  stroke: black;
+  stroke-width: 1px;
+}
+
+.node text {
+  font-size: 20px;
+  color: black;
+}
+svg {
+  width: 400px;
+  height: 200px;
+  margin: 5px;
+  background-color: gray;
+  border: 3px solid gray;
+}
+
+svg.drag-over {
+  border: 3px dashed red;
+}
