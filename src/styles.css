@@ -43,3 +43,7 @@ svg {
 svg.drag-over {
   border: 3px dashed red;
 }
+
+#current-dragged-object {
+  opacity: 0.8;
+}

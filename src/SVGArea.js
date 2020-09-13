@@ -1,57 +1,30 @@
 import React, { useEffect } from "react";
-import * as d3 from "d3";
 
 import SVGDrawer from "./SVGDrawer";
 
-const nodes = [];
-
-/**
- * Convert DOM coordinates to SVG coordinates based on SVG offset and zoom level
- */
-const convertCoordinatesDOMtoSVG = (svg, x, y) => {
-  const pt = svg.node().createSVGPoint();
-
-  pt.x = x;
-  pt.y = y;
-  return pt.matrixTransform(svg.node().getScreenCTM().inverse());
-};
-
-const SVGArea = ({ draggedData }) => {
+const SVGArea = ({ nodes, onAddNode}) => {
   useEffect(() => {
     SVGDrawer.draw(nodes);
   }, []);
 
+  useEffect(() => {
+    SVGDrawer.draw(nodes);
+  }, [nodes.length]);
+
   const onDragOver = (e) => {
     e.preventDefault();
-    d3.select("svg").classed("drag-over", true);
+    SVGDrawer.dragOver();
   };
 
   const onDragLeave = () => {
-    d3.select("svg").classed("drag-over", false);
+    SVGDrawer.dragLeave();
   };
 
   const onDrop = (e) => {
     e.stopPropagation();
-    d3.select("svg").classed("drag-over", false);
+    SVGDrawer.dragLeave();
 
-    // Get the correct coordinates for this node
-    const { x, y } = convertCoordinatesDOMtoSVG(
-      d3.select("svg"),
-      e.clientX - draggedData.offset[0],
-      e.clientY - draggedData.offset[1]
-    );
-
-    // Add the node to the list of nodes.
-    nodes.push({
-      id: nodes.length + 1,
-      name: draggedData.dragObject.name,
-      color: draggedData.dragObject.color,
-      x,
-      y
-    });
-
-    // Redraw the nodes
-    SVGDrawer.draw(nodes);
+    onAddNode(e.clientX, e.clientY);
 
     return false;
   };
@@ -61,8 +34,7 @@ const SVGArea = ({ draggedData }) => {
       className="svgContainer"
       onDrop={(e) => onDrop(e)}
       onDragLeave={(e) => onDragLeave(e)}
-      onDragOver={(e) => onDragOver(e)}
-    >
+      onDragOver={(e) => onDragOver(e)}>
       <svg></svg>
     </div>
   );

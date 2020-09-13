@@ -9,7 +9,7 @@ const blocks = [
   { name: "E", color: "purple" }
 ];
 
-const DraggableBlocks = ({ setDragData }) => {
+const DraggableBlocks = ({ setDragData , onAddNode}) => {
   const onDragStart = (dragData) => {
     setDragData(dragData);
   };
@@ -24,6 +24,7 @@ const DraggableBlocks = ({ setDragData }) => {
           dragObject={b}
           onDragStart={(dragData) => onDragStart(dragData)}
           onDragEnd={() => onDragEnd()}
+          onAddNode={onAddNode}
         >
           <div className="block" style={{ backgroundColor: b.color }}>
             {b.name}
